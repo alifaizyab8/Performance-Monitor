@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Performnce-Monitor VERSION 0.1 LANGUAGES CXX)
+project(Performance-Monitor VERSION 0.1 LANGUAGES CXX)
+
+# This application uses Windows-specific APIs (pdh.h).
+if(NOT WIN32)
+    message(FATAL_ERROR "This project is only supported on Windows.")
+endif()
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -9,69 +14,35 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Charts)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Charts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+    monitor.cpp
+    monitor.h
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Performnce-Monitor
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        monitor.h
-        monitor.cpp
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Performnce-Monitor APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(Performnce-Monitor SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(Performnce-Monitor
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+qt_add_executable(Performance-Monitor
+    MANUAL_FINALIZATION
+    WIN32
+    ${PROJECT_SOURCES}
+)
 
-target_link_libraries(Performnce-Monitor
+target_link_libraries(Performance-Monitor
     PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Charts
-    pdh
-)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Performnce-Monitor)
-endif()
-set_target_properties(Performnce-Monitor PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+    Qt6::Widgets
+    Qt6::Charts
+    Pdh
 )
 
 include(GNUInstallDirs)
-install(TARGETS Performnce-Monitor
+install(TARGETS Performance-Monitor
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Performnce-Monitor)
-endif()
+qt_finalize_executable(Performance-Monitor)
