@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>850</width>
+    <height>500</height>
+   </rect>
+  </property>
+
+  <property name="windowTitle">
+   <string>Performance Monitor</string>
+  </property>
+
+  <!-- DARK THEME -->
+  <property name="styleSheet">
+   <string>
+    QMainWindow {
+        background-color: #121212;
+    }
+
+    QLabel {
+        color: #E0E0E0;
+        font-size: 16px;
+    }
+
+    QLabel#cpuLabel {
+        color: #00E5FF;
+        font-weight: bold;
+    }
+
+    QLabel#ramLabel {
+        color: #69F0AE;
+        font-weight: bold;
+    }
+
+    QLabel#diskLabel {
+        color: #FFD54F;
+        font-weight: bold;
+    }
+
+    QLabel#networkLabel {
+        color: #FF8A80;
+        font-weight: bold;
+    }
+   </string>
+  </property>
+
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="horizontalSpacing">
+       <number>40</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>25</number>
+      </property>
+
+      <!-- CPU -->
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>CPU</string>
+        </property>
+       </widget>
+      </item>
+
+      <item row="0" column="1">
+       <widget class="QLabel" name="cpuLabel">
+        <property name="text">
+         <string>0.0 %</string>
+        </property>
+       </widget>
+      </item>
+
+      <!-- RAM -->
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>RAM</string>
+        </property>
+       </widget>
+      </item>
+
+      <item row="1" column="1">
+       <widget class="QLabel" name="ramLabel">
+        <property name="text">
+         <string>0.0 %</string>
+        </property>
+       </widget>
+      </item>
+
+      <!-- DISK -->
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>DISK</string>
+        </property>
+       </widget>
+      </item>
+
+      <item row="2" column="1">
+       <widget class="QLabel" name="diskLabel">
+        <property name="text">
+         <string>0.0 %</string>
+        </property>
+       </widget>
+      </item>
+
+      <!-- NETWORK -->
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>NETWORK</string>
+        </property>
+       </widget>
+      </item>
+
+      <item row="3" column="1">
+       <widget class="QLabel" name="networkLabel">
+        <property name="text">
+         <string>0.0 KB/s</string>
+        </property>
+       </widget>
+      </item>
+
+     </layout>
+    </item>
+   </layout>
+  </widget>
+
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>850</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuPerformance_Monitor">
+    <property name="title">
+     <string>Performance Monitor</string>
+    </property>
+   </widget>
+   <addaction name="menuPerformance_Monitor"/>
+  </widget>
+
+  <widget class="QStatusBar" name="statusbar"/>
+
+ </widget>
+
+ <resources/>
+ <connections/>
+</ui>
+
